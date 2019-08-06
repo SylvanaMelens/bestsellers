@@ -12,11 +12,12 @@ class BookRow extends Component {
     }
     render(){
 
-        const { title, author, price } = this.props.book
+        const { title, author, price, stocked } = this.props.book
+        
         return (
             <tr>
-                <td>{title}</td>
-                <td>{author}</td>
+                <td>{stocked ? title : <span style={{color: 'darkred', textDecoration: "line-through"}}>{title}</span>}</td>
+                <td style={{fontStyle:"italic"}}>{author}</td>
                 <td>{price}</td>
             </tr>
         )

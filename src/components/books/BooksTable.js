@@ -14,10 +14,26 @@ class BooksTable extends Component {
     }
     render(){
 
+        const { filterText, inStockOnly } = this.props
         const rows = []
+        let lastFormat;
+
         this.props.books.forEach(book => {
             console.log("boucle forEach :", book.title)
+            
+            if (book.title.toLowerCase().indexOf(filterText) === -1){
+                return                
+            }
+
+            if (inStockOnly && !book.stocked){
+                return
+            }
+
+            if (book.format !== lastFormat){
+                rows.push(<BooksFormat format={book.format}/>)
+            }
             rows.push(<BookRow key={book.title} book={book}/>)
+            lastFormat = book.format
         })
 
         return (
@@ -34,7 +50,7 @@ class BooksTable extends Component {
                         {rows}
                     </tbody>
                 </table>
-                <BooksFormat />
+                
                 
             </div>
         )
